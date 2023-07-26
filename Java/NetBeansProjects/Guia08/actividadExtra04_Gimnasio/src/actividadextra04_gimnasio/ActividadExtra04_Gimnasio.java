@@ -17,6 +17,13 @@ public class ActividadExtra04_Gimnasio {
         servCliente.registrarCliente();
         // Crear cliente #2
         servCliente.registrarCliente();
+        // Crear cliente #3
+        servCliente.registrarCliente();
+        // Crear cliente #4
+        servCliente.registrarCliente();
+        // Crear cliente #5
+        servCliente.registrarCliente();
+        
         servCliente.obtenerCliente();
         servCliente.actualizarCliente();
         servCliente.obtenerCliente();
