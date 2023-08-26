@@ -6,15 +6,18 @@ public class Dog {
     private String breed;
     private Integer age;
     private Integer height;
+    private Boolean adopted;
 
-    public Dog() {
+    public Dog(String string, String string2, int i, int j) {
     }
 
-    public Dog(String name, String breed, Integer age, Integer height) {
+
+    public Dog(String name, String breed, Integer age, Integer height, Boolean adopted) {
         this.name = name;
         this.breed = breed;
         this.age = age;
         this.height = height;
+        this.adopted = adopted;
     }
 
     public String getName() {
@@ -49,9 +52,22 @@ public class Dog {
         this.height = height;
     }
 
+
+    public Boolean isAdopted() {
+        return this.adopted;
+    }
+
+    public Boolean getAdopted() {
+        return this.adopted;
+    }
+
+    public void setAdopted(Boolean adopted) {
+        this.adopted = adopted;
+    }
+
     @Override
     public String toString() {
-        return "Dog{" + "name=" + name + ", breed=" + breed + ", age=" + age + ", height=" + height + '}';
+        return "{" + "nombre= " + name + ", raza= " + breed + ", edad= " + age + ", altura= " + height + "}";
     }
-        
+
 }
