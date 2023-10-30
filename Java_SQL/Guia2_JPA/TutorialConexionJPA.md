@@ -1,6 +1,6 @@
 # Tutorial Conexión JPA en IntelliJ Idea Community Editions
 
-En este tutorial revisaremos cómo establecer una **conexión con una base de datos desde IntelliJ Idea Community Editions haciendo uso de Maven, EclipseLink y JPA** (API de persistencia de Java, por sus siglas en inglés). Actualmente no hay casi información acerca de cómo realizar este proceso manualmente en la versión gratuita del IDE previamente mencionado, por lo que espero que este documento sea de ayuda para quienes lo necesiten.
+En este tutorial revisaremos cómo establecer una **conexión con una base de datos desde IntelliJ Idea Community Editions haciendo uso de Maven, el driver JDBC de MySQL y la implementación ofrecida por EclipseLink de JPA** (API de persistencia de Java, por sus siglas en inglés). Actualmente no hay casi información acerca de cómo realizar este proceso manualmente en la versión gratuita del IDE previamente mencionado, por lo que espero que este documento sea de ayuda para quienes lo necesiten.
 
 ## Creando nuestro proyecto
 
@@ -25,7 +25,7 @@ En la ventana emergente, asignaremos un nombre a nuestro proyecto y escogeremos 
 
 ## Añadiendo las dependencias necesarias
 
-Cuando se haya terminado de crear nuestro proyecto, tendremos que agregar las dependencias que usaremos mediante el archivo «pom.xml», el cual está ubicado en la carpeta raíz. El archivo POM (modelo de objetos de proyecto, por sus siglas en inglés) es la unidad fundamental de trabajo en Maven. Contiene información sobre el proyecto y los detalles de configuración utilizados por Maven para construirlo. Para este ejercicio, añadiremos las últimas versiones a la fecha de las dependencias correspondientes a JUnit, JPA y el controlador de MySQL.
+Cuando se haya terminado de crear nuestro proyecto, tendremos que agregar las dependencias que usaremos mediante el archivo «pom.xml», el cual está ubicado en la carpeta raíz. El archivo POM (modelo de objetos de proyecto, por sus siglas en inglés) es la unidad fundamental de trabajo en Maven. Contiene información sobre el proyecto y los detalles de configuración utilizados por Maven para construirlo. Para este ejercicio, añadiremos las últimas versiones a la fecha de las dependencias correspondientes a JUnit, JPA por EclipseLink y el controlador de MySQL para JDBC.
 
 Inicialmente, nuestro archivo POM debería verse de la siguiente manera:
 ```xml
@@ -79,6 +79,13 @@ Para añadir la implementación de JPA con EclipseLink, buscaremos en nuestro na
   <strong>Figura 7.</strong> Búsqueda y selección de dependencia JPA por EclipseLink.
 </p>
 
+Para añadir el conector de MySQL, buscaremos en nuestro navegador «Maven MySQL Connector J», seleccionaremos la versión que queramos utilizar de la lista y copiaremos el código asociado para incluir la dependencia en nuestro proyecto (véase la figura 8).
+
+<p align="center">
+  <img src="img/Fig08.png" alt="Búsqueda y selección de dependencia del conector MySQL" width="70%" height="auto"><br>
+  <strong>Figura 8.</strong> Búsqueda y selección de driver del conector MySQL.
+</p>
+
 </details>
 
 Eventualmente tendremos el siguiente POM.
@@ -106,8 +113,18 @@ Eventualmente tendremos el siguiente POM.
             <version>4.13.2</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>org.eclipse.persistence</groupId>
+            <artifactId>eclipselink</artifactId>
+            <version>4.0.2</version>
+        </dependency>
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>8.0.33</version>
+        </dependency>
     </dependencies>
 
 </project>
 ```
-
+Después de añadir todas las dependencias necesarias a nuestro archivo POM, veremos al costado derecho de IntelliJ Idea un ícono con el logo de Maven. 
