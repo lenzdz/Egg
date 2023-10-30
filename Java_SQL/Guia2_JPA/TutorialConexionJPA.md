@@ -25,9 +25,14 @@ En la ventana emergente, asignaremos un nombre a nuestro proyecto y escogeremos 
 
 ## Añadiendo las dependencias necesarias
 
-Cuando se haya terminado de crear nuestro proyecto, tendremos que agregar las dependencias que usaremos mediante el archivo «pom.xml», el cual está ubicado en la carpeta raíz. El archivo POM (modelo de objetos de proyecto, por sus siglas en inglés) es la unidad fundamental de trabajo en Maven. Contiene información sobre el proyecto y los detalles de configuración utilizados por Maven para construirlo. Para este ejercicio, añadiremos las últimas versiones a la fecha de las dependencias correspondientes a JUnit, JPA por EclipseLink y el controlador de MySQL para JDBC.
+Cuando se haya terminado de crear nuestro proyecto, tendremos que agregar las dependencias que usaremos mediante el archivo «pom.xml», el cual está ubicado en la carpeta raíz (véase la figura 4). El archivo POM (modelo de objetos de proyecto, por sus siglas en inglés) es la unidad fundamental de trabajo en Maven. Contiene información sobre el proyecto y los detalles de configuración utilizados por Maven para construirlo.
 
-Inicialmente, nuestro archivo POM debería verse de la siguiente manera:
+<p align="center">
+  <img src="img/Fig04.png" alt="Ubicación del archivo «pom.xml» en el proyecto." width="70%" height="auto"><br>
+  <strong>Figura 4.</strong> Ubicación del archivo «pom.xml» en el proyecto.
+</p>
+
+Para este ejercicio, añadiremos las últimas versiones a la fecha de las dependencias correspondientes a JUnit, JPA por EclipseLink y el controlador de MySQL para JDBC. Inicialmente, nuestro archivo POM debería verse de la siguiente manera:
 ```xml
   <?xml version="1.0" encoding="UTF-8"?>
   <project xmlns="http://maven.apache.org/POM/4.0.0"
@@ -51,22 +56,21 @@ Inicialmente, nuestro archivo POM debería verse de la siguiente manera:
 Tras abrir el documento, buscaremos en nuestro navegador «Maven JUnit» y haremos clic en la página correspondiente al repositorio oficial de Maven (véase la figura 4). 
 
 <p align="center">
-  <img src="img/Fig04.png" alt="Búsqueda de JUnit para Maven en el navegador." width="70%" height="auto"><br>
-  <strong>Figura 4.</strong> Búsqueda de JUnit para Maven en el navegador.
+  <img src="img/Fig05.png" alt="Búsqueda de JUnit para Maven en el navegador." width="70%" height="auto"><br>
+  <strong>Figura 5.</strong> Búsqueda de JUnit para Maven en el navegador.
 </p>
 
 Estando allí, seleccionaremos la versión de JUnit que deseamos emplear (figura 5) y copiaremos el código que se encuentra en la pestaña «Maven» para agregar la dependencia a nuestro proyecto (figura 6).
 
 <p align="center">
-  <img src="img/Fig05.png" alt="Selección de la última versión de JUnit a la fecha en el repositorio de Maven." width="70%" height="auto"><br>
-  <strong>Figura 5.</strong> Selección de la última versión de JUnit a la fecha en el repositorio de Maven.
+  <img src="img/Fig06.png" alt="Selección de la última versión de JUnit a la fecha en el repositorio de Maven." width="70%" height="auto"><br>
+  <strong>Figura 6.</strong> Selección de la última versión de JUnit a la fecha en el repositorio de Maven.
 </p>
 
 <p align="center">
-  <img src="img/Fig06.png" alt="Copia del código para añadir la dependencia a nuestro proyecto." width="70%" height="auto"><br>
-  <strong>Figura 6.</strong> Copia del código para añadir la dependencia a nuestro proyecto.
+  <img src="img/Fig07.png" alt="Copia del código para añadir la dependencia a nuestro proyecto." width="70%" height="auto"><br>
+  <strong>Figura 7.</strong> Copia del código para añadir la dependencia a nuestro proyecto.
 </p>
-
 
 Regresaremos a nuestro documento POM en IntelliJ Idea y agregaremos la etiqueta ```<dependencies>```. Luego, adentro de esta, pegaremos el código que copiamos del repositorio. Repetiremos el proceso anterior para las dependencias adicionales que deseemos agregar, siendo aquellas en este caso el JPA de EclipseLink y el conector de MySQL. 
 
@@ -75,15 +79,15 @@ Regresaremos a nuestro documento POM en IntelliJ Idea y agregaremos la etiqueta 
 Para añadir la implementación de JPA con EclipseLink, buscaremos en nuestro navegador «Maven JPA EclipseLink», seleccionaremos la versión que queramos utilizar de la lista y copiaremos el código asociado para incluir la dependencia en nuestro proyecto (véase la figura 7).
 
 <p align="center">
-  <img src="img/Fig07.png" alt="Búsqueda y selección de dependencia JPA por EclipseLink." width="70%" height="auto"><br>
-  <strong>Figura 7.</strong> Búsqueda y selección de dependencia JPA por EclipseLink.
+  <img src="img/Fig08.png" alt="Búsqueda y selección de dependencia JPA por EclipseLink." width="70%" height="auto"><br>
+  <strong>Figura 8.</strong> Búsqueda y selección de dependencia JPA por EclipseLink.
 </p>
 
 Para añadir el conector de MySQL, buscaremos en nuestro navegador «Maven MySQL Connector J», seleccionaremos la versión que queramos utilizar de la lista y copiaremos el código asociado para incluir la dependencia en nuestro proyecto (véase la figura 8).
 
 <p align="center">
-  <img src="img/Fig08.png" alt="Búsqueda y selección de dependencia del conector MySQL" width="70%" height="auto"><br>
-  <strong>Figura 8.</strong> Búsqueda y selección de driver del conector MySQL.
+  <img src="img/Fig09.png" alt="Búsqueda y selección de dependencia del conector MySQL" width="70%" height="auto"><br>
+  <strong>Figura 9.</strong> Búsqueda y selección de driver del conector MySQL.
 </p>
 
 </details>
@@ -108,9 +112,9 @@ Eventualmente tendremos el siguiente POM.
 
     <dependencies>
         <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>4.13.2</version>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-api</artifactId>
+            <version>5.10.0</version>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -119,12 +123,27 @@ Eventualmente tendremos el siguiente POM.
             <version>4.0.2</version>
         </dependency>
         <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-            <version>8.0.33</version>
+            <groupId>com.mysql</groupId>
+            <artifactId>mysql-connector-j</artifactId>
+            <version>8.2.0</version>
         </dependency>
     </dependencies>
 
 </project>
 ```
-Después de añadir todas las dependencias necesarias a nuestro archivo POM, veremos al costado derecho de IntelliJ Idea un ícono con el logo de Maven. 
+Después de añadir todas las dependencias necesarias a nuestro archivo POM, veremos al costado derecho de IntelliJ Idea un ícono con el logo de Maven (figura 10). Haremos clic en él y todas las dependencias que no tengamos instaladas en nuestra máquina comenzarán a descargarse. Podremos seguir este proceso viendo la esquina inferior derecha del IDE (figura 11) y, una vez este termine, veremos las nuevas dependencias agregadas expandiendo la carpeta «External Libraries» (figura 12).
+
+<p align="center">
+  <img src="img/Fig10.png" alt="Ícono de Maven que aparece en IntelliJ Idea para agregar nuevas dependencias." width="70%" height="auto"><br>
+  <strong>Figura 10.</strong> Ícono de Maven que aparece en IntelliJ Idea para agregar nuevas dependencias.
+</p>
+
+<p align="center">
+  <img src="img/Fig11.png" alt="Proceso de instalación de dependencias." width="70%" height="auto"><br>
+  <strong>Figura 11.</strong> Proceso de instalación de dependencias.
+</p>
+
+<p align="center">
+  <img src="img/Fig12.png" alt="Verificación de instalación de dependencias en el proyecto." width="70%" height="auto"><br>
+  <strong>Figura 12.</strong> Verificación de instalación de dependencias en el proyecto.
+</p>
