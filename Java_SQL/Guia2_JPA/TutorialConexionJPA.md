@@ -53,14 +53,14 @@ Para este ejercicio, añadiremos las últimas versiones a la fecha de las depend
   </project>
 ```
 
-Tras abrir el documento, buscaremos en nuestro navegador «Maven JUnit» y haremos clic en la página correspondiente al repositorio oficial de Maven (véase la figura 4). 
+Tras abrir el documento, buscaremos en nuestro navegador «Maven JUnit Jupiter» y haremos clic en la página correspondiente al repositorio oficial de Maven (véase la figura 5). 
 
 <p align="center">
   <img src="img/Fig05.png" alt="Búsqueda de JUnit para Maven en el navegador." width="70%" height="auto"><br>
   <strong>Figura 5.</strong> Búsqueda de JUnit para Maven en el navegador.
 </p>
 
-Estando allí, seleccionaremos la versión de JUnit que deseamos emplear (figura 5) y copiaremos el código que se encuentra en la pestaña «Maven» para agregar la dependencia a nuestro proyecto (figura 6).
+Estando allí, seleccionaremos la versión de JUnit que deseamos emplear (figura 6) y copiaremos el código que se encuentra en la pestaña «Maven» para agregar la dependencia a nuestro proyecto (figura 7).
 
 <p align="center">
   <img src="img/Fig06.png" alt="Selección de la última versión de JUnit a la fecha en el repositorio de Maven." width="70%" height="auto"><br>
@@ -76,14 +76,14 @@ Regresaremos a nuestro documento POM en IntelliJ Idea y agregaremos la etiqueta 
 
 <details><summary>Si quieres verificar cómo es el proceso para añadir estas últimas dos dependencias, haz clic aquí.</summary><br>
 
-Para añadir la implementación de JPA con EclipseLink, buscaremos en nuestro navegador «Maven JPA EclipseLink», seleccionaremos la versión que queramos utilizar de la lista y copiaremos el código asociado para incluir la dependencia en nuestro proyecto (véase la figura 7).
+Para añadir la implementación de JPA con EclipseLink, buscaremos en nuestro navegador «Maven JPA EclipseLink», seleccionaremos la versión que queramos utilizar de la lista y copiaremos el código asociado para incluir la dependencia en nuestro proyecto (véase la figura 8).
 
 <p align="center">
   <img src="img/Fig08.png" alt="Búsqueda y selección de dependencia JPA por EclipseLink." width="70%" height="auto"><br>
   <strong>Figura 8.</strong> Búsqueda y selección de dependencia JPA por EclipseLink.
 </p>
 
-Para añadir el conector de MySQL, buscaremos en nuestro navegador «Maven MySQL Connector J», seleccionaremos la versión que queramos utilizar de la lista y copiaremos el código asociado para incluir la dependencia en nuestro proyecto (véase la figura 8).
+Para añadir el conector de MySQL, buscaremos en nuestro navegador «Maven MySQL Connector J», seleccionaremos la versión que queramos utilizar de la lista y copiaremos el código asociado para incluir la dependencia en nuestro proyecto (véase la figura 9).
 
 <p align="center">
   <img src="img/Fig09.png" alt="Búsqueda y selección de dependencia del conector MySQL" width="70%" height="auto"><br>
@@ -146,4 +146,28 @@ Después de añadir todas las dependencias necesarias a nuestro archivo POM, ver
 <p align="center">
   <img src="img/Fig12.png" alt="Verificación de instalación de dependencias en el proyecto." width="70%" height="auto"><br>
   <strong>Figura 12.</strong> Verificación de instalación de dependencias en el proyecto.
+</p>
+
+## Creación de la base de datos
+
+Antes de añadir nuestro archivo de Persistencia para establecer la conexión, tendremos que crear una base de datos. Abriremos nuestro sistema de gestión de bases de datos (DBMS, por sus siglas en inglés) de preferencia y allí crearemos un nuevo esquema.
+
+~~~~sql
+CREATE SCHEMA `library` DEFAULT CHARACTER SET utf8mb4;
+~~~~
+
+Encontraremos nuestra nueva base de datos en el navegador tras ejecutar la *query* de creación.
+
+<p align="center">
+  <img src="img/Fig13.png" alt="Nuevo esquema creado en MySQL Workbench." width="70%" height="auto"><br>
+  <strong>Figura 13.</strong> Nuevo esquema creado en MySQL Workbench.
+</p>
+
+## Creación de la unidad de Persistencia
+
+Estando ya creado el esquema sobre el cual trabajaremos, procederemos a crear nuestra unidad de Persistencia. Para ello, volveremos a IntelliJ Idea y, en el costado izquierdo donde se encuentra la estructura del proyecto, crearemos un nuevo directorio bajo la carpeta «resources» llamado «META-INF». Luego, en este nuevo directorio, añadiremos un nuevo archivo llamado «persistence.xml» (figura 14).
+
+<p align="center">
+  <img src="img/Fig14.png" alt="Estructura del directorio donde se encuentra el archivo «persistence.xml»." width="70%" height="auto"><br>
+  <strong>Figura 14.</strong> Estructura del directorio donde se encuentra el archivo «persistence.xml».
 </p>
