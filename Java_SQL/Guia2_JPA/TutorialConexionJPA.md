@@ -1,6 +1,6 @@
 # Tutorial Conexión JPA en IntelliJ Idea Community Editions
 
-En este tutorial revisaremos cómo establecer una **conexión con una base de datos desde IntelliJ Idea Community Editions haciendo uso de Maven, el driver JDBC de MySQL y la implementación ofrecida por EclipseLink de JPA** (API de persistencia de Java, por sus siglas en inglés). Actualmente no hay casi información acerca de cómo realizar este proceso manualmente en la versión gratuita del IDE previamente mencionado, por lo que espero que este documento sea de ayuda para quienes lo necesiten.
+En este tutorial revisaremos cómo establecer una **conexión con una base de datos desde IntelliJ Idea Community Editions haciendo uso de Maven, el *driver* JDBC de MySQL Connector/J y la implementación ofrecida por EclipseLink de JPA** (API de persistencia de Java, por sus siglas en inglés). Actualmente no hay casi información acerca de cómo realizar este proceso manualmente en la versión gratuita del IDE previamente mencionado, por lo que espero que este documento sea de ayuda para quienes lo necesiten. 
 
 ## Creando nuestro proyecto
 
@@ -16,7 +16,7 @@ En primer lugar, tendremos que crear nuestro proyecto. Para ello iremos a File >
   <strong>Figura 2.</strong> Creación de proyecto en IntelliJ Idea Community Edition cuando se está en la página de inicio.
 </p>
 
-En la ventana emergente, asignaremos un nombre a nuestro proyecto y escogeremos la ruta en la que lo guardaremos. Posteriormente, elegiremos «Java» como lenguaje (*language*), «Maven» como herramienta de construcción (*build system*) y seleccionaremos la versión 17 de Java (véase la figura 3). En las opciones avanzadas, podremos también asignar un valor al identificador del equipo (*groupId*),  elemento que señala la organización o grupo que creó el proyecto. La estructura que debe seguir este ítem es: «com.[nombre del responsable del proyecto].[nombre del proyecto]». En este caso, utilizaré mi nombre de usuario de Github para el nombre del responsable, así que quedará de la siguiente manera: com.lenzdz.libraryApp. No es necesario que modifiquemos el identificar del artefacto (*artifactId*), que vendría siendo el mismo nombre del proyecto. Una vez hayamos terminado, haremos clic en el botón «Create».
+En la ventana emergente, asignaremos un nombre a nuestro proyecto y escogeremos la ruta en la que lo guardaremos. Posteriormente, elegiremos «Java» como lenguaje (*language*), «Maven» como herramienta de construcción (*build system*) y seleccionaremos la versión 17 de Java (véase la figura 3). En las opciones avanzadas, podremos también asignar un valor al identificador del equipo (*groupId*),  elemento que señala la organización o grupo que creó el proyecto. La estructura que debe seguir este ítem es: «com.[nombre del responsable del proyecto].[nombre del proyecto]». En este caso, utilizaré mi nombre de usuario de Github para el nombre del responsable, así que quedará de la siguiente manera: com.lenzdz.libraryApp. No es necesario que modifiquemos el identificador del artefacto (*artifactId*), que vendría siendo el mismo nombre del proyecto. Una vez hayamos terminado, haremos clic en el botón «Create».
 
 <p align="center">
   <img src="img/Fig03.png" alt="Selección de opciones en menú de creación de proyecto." width="70%" height="auto"><br>
@@ -32,7 +32,7 @@ Cuando se haya terminado de crear nuestro proyecto, tendremos que agregar las de
   <strong>Figura 4.</strong> Ubicación del archivo «pom.xml» en el proyecto.
 </p>
 
-Para este ejercicio, añadiremos las últimas versiones a la fecha de las dependencias correspondientes a JUnit, JPA por EclipseLink y el controlador de MySQL para JDBC. Inicialmente, nuestro archivo POM debería verse de la siguiente manera:
+Para este ejercicio, añadiremos las últimas versiones a la fecha de las dependencias correspondientes a JUnit, JPA por EclipseLink y el *driver* JDBC de MySQL Connector/J. Inicialmente, nuestro archivo POM debería verse de la siguiente manera:
 ```xml
   <?xml version="1.0" encoding="UTF-8"?>
   <project xmlns="http://maven.apache.org/POM/4.0.0"
@@ -87,7 +87,7 @@ Para añadir el conector de MySQL, buscaremos en nuestro navegador «Maven MySQL
 
 <p align="center">
   <img src="img/Fig09.png" alt="Búsqueda y selección de dependencia del conector MySQL" width="70%" height="auto"><br>
-  <strong>Figura 9.</strong> Búsqueda y selección de driver del conector MySQL.
+  <strong>Figura 9.</strong> Búsqueda y selección de *driver* del conector MySQL.
 </p>
 
 </details>
@@ -183,7 +183,7 @@ En este documento, agregaremos todas las etiquetas necesarias para que la unidad
 </persistence>
 ```
 
-Posteriormente, agregaremos la etiqueta ```<persistence-unit>```, la cual tendrá dos atributos. El primero, ```name```, contendrá la información sobre el nombre de la conexión JPA. Por convención, el nombre de la unidad de persistencia debe terminar en «PU», la sigla para persistence unit. Por lo tanto, el valor que le asignaremos a este atributo será «[nombre de nuestro proyecto]PU». El segundo, ```transaction-type```, se utiliza para especificar si los gestores de entidades proporcionados por la fábrica de gestores de entidades para la unidad de persistencia deben ser gestores de entidades JTA (API de transacción de Java, por sus siglas en inglés) o gestores de entidades locales de recursos. En este caso utilizaremos la segunda opción, así que le asignaremos el valor ```RESOURCE_LOCAL``` al atributo ```transaction-type```.
+Posteriormente, agregaremos la etiqueta ```<persistence-unit>```, la cual tendrá dos atributos. El primero, ```name```, contendrá el nombre de la conexión JPA y será el que utilizaremos para establecer la conexión desde la aplicación Java. Por convención, el nombre de la unidad de persistencia debe terminar en «PU», la sigla para *persistence unit*. Por lo tanto, el valor que le asignaremos a este atributo será «[nombre de nuestro proyecto]PU». El segundo, ```transaction-type```, se utiliza para especificar si los gestores de entidades proporcionados por la fábrica de gestores de entidades para la unidad de persistencia deben ser gestores de entidades JTA (API de transacción de Java, por sus siglas en inglés) o gestores de entidades locales de recursos. En este caso utilizaremos la segunda opción, así que le asignaremos el valor ```RESOURCE_LOCAL``` al atributo ```transaction-type```.
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -211,7 +211,7 @@ Una vez hayamos terminado de definir los datos de la unidad de persistencia, inc
 </persistence>
 ```
 
-Después de la etiqueta ```<provider>```, y estando todavía entre la etiqueta ```<persistence-unit>```, añadiremos la información sobre las entidades (funcionarán como las tablas de nuestra base de datos) que nos interesa mapear en el proyecto. Para ello, tenemos tres opciones. La primera y más sencilla es con la etiqueta ```<exclude-unlisted-classes>``` establecida con el valor ```false```. Esto habilitará el escaneo y descubrimiento de clases locales en el proyecto de manera automática, sin necesidad de listarlas. En otras palabras, el proveedor de persistencia EclipseLink intentará encontrar e incluir clases locales si se establece este elemento a ```false```. La segunda opción, que resulta un poco más robusta, consiste en utilizar la etiqueta ```<class>``` para mapear cada una de las entidades de nuestro proyecto. Adentro de estas etiquetas incluiremos la ruta a las entidades que deseemos incluir como parte de la base de datos. Por último, tenemos la opción más robusta y recomendada para proyectos de mayor calibre, que está basada en mapear las entidades con un archivo «orm.xml» llamado mediante la etiqueta ```<mapping-file>```. En este tutorial no se cubrirá aquel tema. Vale la pena mencionar que solo debemos emplear una de esta tres opciones en la unidad de persistencia. De lo contrario, el archivo XML no se ejecutará correctamente y la conexión fallará.
+Después de la etiqueta ```<provider>```, y estando todavía entre la etiqueta ```<persistence-unit>```, añadiremos la información sobre las entidades (funcionarán como las tablas de nuestra base de datos) que nos interesa mapear en el proyecto. Para ello, tenemos tres opciones. La primera y más sencilla es con la etiqueta ```<exclude-unlisted-classes>``` establecida con el valor ```false```. Esto habilitará el escaneo y descubrimiento de clases locales en el proyecto de manera automática, sin necesidad de listarlas. En otras palabras, el proveedor de persistencia EclipseLink intentará encontrar e incluir clases locales si se establece este elemento a ```false```. 
 
 **Ejemplo con ```<exclude-unlisted-classes>```**
 ```xml
@@ -228,6 +228,8 @@ Después de la etiqueta ```<provider>```, y estando todavía entre la etiqueta `
     </persistence-unit>
 </persistence>
 ```
+
+La segunda opción, que resulta un poco más robusta, consiste en utilizar la etiqueta ```<class>``` para mapear cada una de las entidades de nuestro proyecto. Adentro de estas etiquetas escribiremos la ruta a las entidades que deseemos incluir como parte de la base de datos (no olvidar cambiar el nombre de organización «lenzdz» en el ejemplo por el que hayan utilizado en su proyecto). Por último, tenemos la opción más robusta y recomendada para proyectos de mayor calibre, que está basada en mapear las entidades con un archivo «orm.xml» llamado mediante la etiqueta ```<mapping-file>```. En este tutorial no se cubrirá aquel tema. Vale la pena mencionar que solo debemos emplear una de estas tres opciones en la unidad de persistencia. De lo contrario, el archivo XML no se ejecutará correctamente y la conexión fallará.
 
 **Ejemplo con ```<class>```**
 ```xml
@@ -246,7 +248,7 @@ Después de la etiqueta ```<provider>```, y estando todavía entre la etiqueta `
 </persistence>
 ```
 
-Por último, agregaremos la etiqueta ```<properties>```, la cual contendrá en su interior la información sobre la URL para establecer la conexión, el usuario, el driver JDBC, la contraseña y el esquema de generación de la base de datos. Al final, nuestro archivo «persistence.xml» deberá verse así:
+Por último, agregaremos la etiqueta ```<properties>```, la cual contendrá la información sobre la URL para establecer la conexión (no olvidar actualizar los valores en el ejemplo del servidor [3306] y de la base de datos al final del enlace [/library] a los de su proyecto), el usuario, la contraseña, el driver JDBC y el esquema de generación de la base de datos. Al final, nuestro archivo «persistence.xml» deberá verse así:
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -263,8 +265,8 @@ Por último, agregaremos la etiqueta ```<properties>```, la cual contendrá en s
         <properties>
             <property name="jakarta.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/library"/>
             <property name="jakarta.persistence.jdbc.user" value="root"/>
-            <property name="jakarta.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
             <property name="jakarta.persistence.jdbc.password" value="root"/>
+            <property name="jakarta.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
             <property name="jakarta.persistence.schema-generation.database.action" value="create"/>
         </properties>
 
@@ -299,7 +301,7 @@ public class Main {
 }
 ```
 
-Si el proceso de configuración se ha realizado de forma exitosa, veremos el resultado en la consola (figura 16). Adicionalmente, tras refrescar los esquemas en el DBMS encontraremos las nuevas tablas asociadas a la base de datos con los nombres de las entidades que creamos en IntelliJ Idea (figura 17).
+Si el proceso de configuración se ha realizado correctamente, veremos en consola un mensaje de ejecución exitosa (figura 16). Adicionalmente, tras refrescar los esquemas en el DBMS encontraremos las nuevas tablas asociadas a la base de datos con los nombres de las entidades que creamos en IntelliJ Idea (figura 17).
 
 <p align="center">
   <img src="img/Fig16.png" alt="Resultado en consola tras ejecución del programa que resultó en una configuración de JPA exitosa." width="70%" height="auto"><br>
