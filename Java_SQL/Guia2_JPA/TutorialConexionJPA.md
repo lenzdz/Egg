@@ -163,11 +163,145 @@ Encontraremos nuestra nueva base de datos en el navegador tras ejecutar la *quer
   <strong>Figura 13.</strong> Nuevo esquema creado en MySQL Workbench.
 </p>
 
-## Creación de la unidad de Persistencia
+## Creación de la unidad de persistencia
 
-Estando ya creado el esquema sobre el cual trabajaremos, procederemos a crear nuestra unidad de Persistencia. Para ello, volveremos a IntelliJ Idea y, en el costado izquierdo donde se encuentra la estructura del proyecto, crearemos un nuevo directorio bajo la carpeta «resources» llamado «META-INF». Luego, en este nuevo directorio, añadiremos un nuevo archivo llamado «persistence.xml» (figura 14).
+Estando ya creado el esquema sobre el cual trabajaremos, procederemos a crear nuestra unidad de persistencia. Para ello, volveremos a IntelliJ Idea y, en el costado izquierdo donde se encuentra la estructura del proyecto, crearemos un nuevo directorio bajo la carpeta «resources» llamado «META-INF». Luego, en este nuevo directorio, añadiremos un archivo llamado «persistence.xml» (figura 14).
 
 <p align="center">
   <img src="img/Fig14.png" alt="Estructura del directorio donde se encuentra el archivo «persistence.xml»." width="70%" height="auto"><br>
   <strong>Figura 14.</strong> Estructura del directorio donde se encuentra el archivo «persistence.xml».
+</p>
+
+En este documento, agregaremos todas las etiquetas necesarias para que la unidad de Persistencia funcione correctamente. Primero incluiremos la declaración XML, que describe algunas de las propiedades generales del documento como la versión de XML y el codificado, junto con la etiqueta de persistencia. Esta última es el elemento raíz del archivo y sirve para definir la versión de JPA a utilizar, al igual que establecer el esquema XML para validar la configuración del archivo «persistence.xml».
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.2" xmlns="http://xmlns.jcp.org/xml/ns/persistence"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence
+             http://xmlns.jcp.org/xml/ns/persistence/persistence_2_2.xsd">
+</persistence>
+```
+
+Posteriormente, agregaremos la etiqueta ```<persistence-unit>```, la cual tendrá dos atributos. El primero, ```name```, contendrá la información sobre el nombre de la conexión JPA. Por convención, el nombre de la unidad de persistencia debe terminar en «PU», la sigla para persistence unit. Por lo tanto, el valor que le asignaremos a este atributo será «[nombre de nuestro proyecto]PU». El segundo, ```transaction-type```, se utiliza para especificar si los gestores de entidades proporcionados por la fábrica de gestores de entidades para la unidad de persistencia deben ser gestores de entidades JTA (API de transacción de Java, por sus siglas en inglés) o gestores de entidades locales de recursos. En este caso utilizaremos la segunda opción, así que le asignaremos el valor ```RESOURCE_LOCAL``` al atributo ```transaction-type```.
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.2" xmlns="http://xmlns.jcp.org/xml/ns/persistence"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence
+             http://xmlns.jcp.org/xml/ns/persistence/persistence_2_2.xsd">
+    <persistence-unit name="libraryPU" transaction-type="RESOURCE_LOCAL">
+    </persistence-unit>
+</persistence>
+```
+
+Una vez hayamos terminado de definir los datos de la unidad de persistencia, incluiremos en nuestro documento la información sobre el proveedor del JPA. Esta se declara mediante la etiqueta ```<provider>```, la cual debe ir adentro de la etiqueta ```<persistence-unit>```.
+
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.2" xmlns="http://xmlns.jcp.org/xml/ns/persistence"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence
+             http://xmlns.jcp.org/xml/ns/persistence/persistence_2_2.xsd">
+    <persistence-unit name="libraryPU" transaction-type="RESOURCE_LOCAL">
+        <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+    </persistence-unit>
+</persistence>
+```
+
+Después de la etiqueta ```<provider>```, y estando todavía entre la etiqueta ```<persistence-unit>```, añadiremos la información sobre las entidades (funcionarán como las tablas de nuestra base de datos) que nos interesa mapear en el proyecto. Para ello, tenemos tres opciones. La primera y más sencilla es con la etiqueta ```<exclude-unlisted-classes>``` establecida con el valor ```false```. Esto habilitará el escaneo y descubrimiento de clases locales en el proyecto de manera automática, sin necesidad de listarlas. En otras palabras, el proveedor de persistencia EclipseLink intentará encontrar e incluir clases locales si se establece este elemento a ```false```. La segunda opción, que resulta un poco más robusta, consiste en utilizar la etiqueta ```<class>``` para mapear cada una de las entidades de nuestro proyecto. Adentro de estas etiquetas incluiremos la ruta a las entidades que deseemos incluir como parte de la base de datos. Por último, tenemos la opción más robusta y recomendada para proyectos de mayor calibre, que está basada en mapear las entidades con un archivo «orm.xml» llamado mediante la etiqueta ```<mapping-file>```. En este tutorial no se cubrirá aquel tema. Vale la pena mencionar que solo debemos emplear una de esta tres opciones en la unidad de persistencia. De lo contrario, el archivo XML no se ejecutará correctamente y la conexión fallará.
+
+**Ejemplo con ```<exclude-unlisted-classes>```**
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.2" xmlns="http://xmlns.jcp.org/xml/ns/persistence"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence
+             http://xmlns.jcp.org/xml/ns/persistence/persistence_2_2.xsd">
+    <persistence-unit name="libraryPU" transaction-type="RESOURCE_LOCAL">
+
+        <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+        <exclude-unlisted-classes>false</exclude-unlisted-classes>
+
+    </persistence-unit>
+</persistence>
+```
+
+**Ejemplo con ```<class>```**
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.2" xmlns="http://xmlns.jcp.org/xml/ns/persistence"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence
+             http://xmlns.jcp.org/xml/ns/persistence/persistence_2_2.xsd">
+    <persistence-unit name="libraryPU" transaction-type="RESOURCE_LOCAL">
+
+        <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+        <class>com.lenzdz.entities.Book</class>
+        <class>com.lenzdz.entities.Author</class>
+
+    </persistence-unit>
+</persistence>
+```
+
+Por último, agregaremos la etiqueta ```<properties>```, la cual contendrá en su interior la información sobre la URL para establecer la conexión, el usuario, el driver JDBC, la contraseña y el esquema de generación de la base de datos. Al final, nuestro archivo «persistence.xml» deberá verse así:
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.2" xmlns="http://xmlns.jcp.org/xml/ns/persistence"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence
+             http://xmlns.jcp.org/xml/ns/persistence/persistence_2_2.xsd">
+    <persistence-unit name="libraryPU" transaction-type="RESOURCE_LOCAL">
+
+        <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+        <class>com.lenzdz.Entities.Book</class>
+        <class>com.lenzdz.Entities.Author</class>
+
+        <properties>
+            <property name="jakarta.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/library"/>
+            <property name="jakarta.persistence.jdbc.user" value="root"/>
+            <property name="jakarta.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
+            <property name="jakarta.persistence.jdbc.password" value="root"/>
+            <property name="jakarta.persistence.schema-generation.database.action" value="create"/>
+        </properties>
+
+    </persistence-unit>
+</persistence>
+```
+
+## Estableciendo y verificando la conexión
+
+Tras completar de diligenciar la información sobre la unidad de persistencia, agregaremos las entidades a nuestro proyecto que nos interesa incluir en la base de datos y mapearemos los atributos de cada una (figura 15).
+
+<p align="center">
+  <img src="img/Fig15.png" alt="Clase de Java mapeada como entidad con atributos establecidos." width="70%" height="auto"><br>
+  <strong>Figura 15.</strong> Clase de Java mapeada como entidad con atributos establecidos.
+</p>
+
+Finalizaremos agregando al ```main``` las operaciones para persistir entidades a nuestra base de datos con ```EntityManager``` y, luego, ejecutaremos. Vale la pena aclarar que el texto que debe ir dentro del llamado al método ```createEntityManagerFactory()``` corresponde al nombre que le asignamos a la unidad de persistencia en nuestro archivo «persistence.xml». Como vimos anteriormente, este se encuentra bajo el atributo ```name```de la etiqueta ```<persistence-unit>```.
+
+```java
+package com.lenzdz.libraryApp;
+
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.Persistence;
+
+public class Main {
+    public static void main(String[] args) {
+
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("libraryPU");
+        EntityManager em = emf.createEntityManager();
+    }
+}
+```
+
+Si el proceso de configuración se ha realizado de forma exitosa, veremos el resultado en la consola (figura 16). Adicionalmente, tras refrescar los esquemas en el DBMS encontraremos las nuevas tablas asociadas a la base de datos con los nombres de las entidades que creamos en IntelliJ Idea (figura 17).
+
+<p align="center">
+  <img src="img/Fig16.png" alt="Resultado en consola tras ejecución del programa que resultó en una configuración de JPA exitosa." width="70%" height="auto"><br>
+  <strong>Figura 16.</strong> Resultado en consola tras ejecución del programa que resultó en una configuración de JPA exitosa.
 </p>
