@@ -305,3 +305,12 @@ Si el proceso de configuración se ha realizado de forma exitosa, veremos el res
   <img src="img/Fig16.png" alt="Resultado en consola tras ejecución del programa que resultó en una configuración de JPA exitosa." width="70%" height="auto"><br>
   <strong>Figura 16.</strong> Resultado en consola tras ejecución del programa que resultó en una configuración de JPA exitosa.
 </p>
+
+<p align="center">
+  <img src="img/Fig17.png" alt="Base de datos actualizada tras ejecución del programa." width="70%" height="auto"><br>
+  <strong>Figura 17.</strong> Base de datos actualizada tras ejecución del programa.
+</p>
+
+*Escrito por Lena Paredes*
+*Publicado el 30 de octubre de 2023*
+*Última actualización el 30 de octubre de 2023*
