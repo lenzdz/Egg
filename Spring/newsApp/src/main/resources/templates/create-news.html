@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Sistema de gestión de noticias</title>
+    <link rel="stylesheet" type="text/css" href="/css/styles.css" />
+</head>
+<body>
+
+    <header class="header">
+        <a th:href="@{/}" class ="logo">Sistema de gestión de noticias</a>
+
+        <nav class="navbar">
+            <a th:href="@{/}">Inicio</a>
+            <a th:href="@{/news/}">Noticias</a>
+            <a th:href="@{/news/creation-form}">Crear</a>
+            <a th:href="@{/news/modify}">Modificar</a>
+            <a th:href="@{/news/delete}">Eliminar</a>
+        </nav>
+    </header>
+
+    <div class="container">
+
+        <div th:class="${error != null} ? 'error-banner' : 'hidden-banner'">
+            <!-- Si error no es nulo (aka. existe un error), se aplica la clase 'banner'. Si error es nulo (aka. no hay error), se aplica la clase 'hidden-banner' -->
+            <img class="banner-img" src="https://cdn-icons-png.flaticon.com/512/561/561739.png" alt="Warning sign"/>
+            <p class="error-banner-text" th:text="${error}"></p>
+        </div>
+
+        <div th:class="${success != null} ? 'success-banner' : 'hidden-banner'">
+            <img class="banner-img" src="https://pixlok.com/wp-content/uploads/2021/12/Green-Tick-Icon-SVG-03vd-300x300.png" alt="Success sign"/>
+            <p class="error-banner-text" th:text="${success}"></p>
+        </div>
+
+        <h2>Cargar nuevo artículo</h2>
+
+        <form class="form" action="/news/create" method="POST">
+
+            <label for="articleTitle">Título del artículo</label><br/>
+            <input type="text" id="articleTitle" name="articleTitle"><br/>
+            <label for="articleBody">Texto del artículo</label><br/>
+            <textarea rows = "5" cols = "1024" id="articleBody" name="articleBody"></textarea>
+            <br/>
+            <button type="submit">Subir artículo</button>
+
+        </form>
+
+    </div>
+
+
+
+</body>
+</html>

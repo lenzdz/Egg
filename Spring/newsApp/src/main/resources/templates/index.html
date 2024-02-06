@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Sistema de gestión de noticias</title>
+    <link rel="stylesheet" type="text/css" href="/css/styles.css" />
+</head>
+<body>
+
+    <header class="header">
+        <a th:href="@{/}" class ="logo">Sistema de gestión de noticias</a>
+
+        <nav class="navbar">
+            <a th:href="@{/}">Inicio</a>
+            <a th:href="@{/news/}">Noticias</a>
+            <a th:href="@{/news/creation-form}">Crear</a>
+            <a th:href="@{/news/modify}">Modificar</a>
+            <a th:href="@{/news/delete}">Eliminar</a>
+        </nav>
+    </header>
+
+
+
+</body>
+</html>

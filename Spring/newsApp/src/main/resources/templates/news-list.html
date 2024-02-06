@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Sistema de gestión de noticias</title>
+    <link rel="stylesheet" type="text/css" href="/css/styles.css" />
+</head>
+<body>
+
+    <header class="header">
+        <a th:href="@{/}" class ="logo">Sistema de gestión de noticias</a>
+
+        <nav class="navbar">
+            <a th:href="@{/}">Inicio</a>
+            <a th:href="@{/news/}">Noticias</a>
+            <a th:href="@{/news/creation-form}">Crear</a>
+            <a th:href="@{/news/modify}">Modificar</a>
+            <a th:href="@{/news/delete}">Eliminar</a>
+        </nav>
+    </header>
+
+    <div class="container">
+
+        <h2>Archivo de noticias</h2>
+
+        <table class="table">
+            <tbody>
+                <tr>
+                    <th>ID</th>
+                    <th>Título</th>
+                    <th>Cuerpo del artículo</th>
+                </tr>
+                <tr th:each="article : ${articles}">
+                    <td th:text="${article.id}"></td>
+                    <td th:text="${article.title}"></td>
+                    <td th:text="${#strings.substring(article.body, 0, 150)}"></td>
+                </tr>
+            </tbody>
+        </table>
+
+    </div>
+
+</body>
+</html>
